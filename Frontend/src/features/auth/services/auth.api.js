@@ -4,7 +4,7 @@ const api = axois.create({
   baseURL: "http://localhost:3000/api/auth/",
   withCredentials: true,
 });
-
+// These 4 functions are used to make api calls to the backend for authentication related operations like register, login, logout and getMe. These functions are used in the hooks and pages of the auth feature to make api calls to the backend and get the response. These functions are also used to handle the response from the backend and return the data to the hooks and pages.
 export async function register({ username, email, password }) {
   try {
     const response = await api.post(
