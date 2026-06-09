@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../auth.context";
 import { register, login, logout, getMe } from "../services/auth.api";
 
@@ -41,5 +41,16 @@ export const useAuth = () => {
       setLoading(false);
     }
   };
+  // kui ki jab bhi app load hoga to hm getMe function ko call karenge taki agar user already login hai to uski information mil jaye aur agar user login nahi hai to user ki state null rahe. Aur isse hamare app me user ki information available ho jaye.
+
+  useEffect(() => {
+    const getAndSetUser = async () => {
+      const data = await getMe(); // ya  ky krga ki backend se user ka current user ka data lay kr aa ja aaga aur usko setUser me set kar dega taki user ki state me user ka data aa jaye aur agar user login nahi hai to user ki state null rahegi
+      // ya token pr depend krta hai ki user login hai ya nahi agar token valid hai to user ka data aayega aur agar token invalid hai to user ki state null rahegi
+      setUser(data.user);
+      setLoading(false);
+    };
+    getAndSetUser();
+  }, []);
   return { user, loading, handleLogin, handleRegister, handleLogout };
 };
