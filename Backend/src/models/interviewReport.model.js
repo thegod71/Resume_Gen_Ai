@@ -41,36 +41,42 @@ const technicalQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, "Question is required"],
+      required: [true, "Technical question is required"],
     },
-    intentions: {
+    intention: {
       type: String,
-      required: [true, "Intentions are required"],
+      required: [true, "Intention is required"],
     },
     answer: {
       type: String,
       required: [true, "Answer is required"],
     },
   },
-  { _id: false },
+  {
+    _id: false,
+  },
 );
+
 const behavioralQuestionSchema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: [true, "Question is required"],
+      required: [true, "Technical question is required"],
     },
-    intentions: {
+    intention: {
       type: String,
-      required: [true, "Intentions are required"],
+      required: [true, "Intention is required"],
     },
     answer: {
       type: String,
       required: [true, "Answer is required"],
     },
   },
-  { _id: false },
+  {
+    _id: false,
+  },
 );
+
 const skillGapSchema = new mongoose.Schema(
   {
     skill: {
@@ -83,7 +89,9 @@ const skillGapSchema = new mongoose.Schema(
       required: [true, "Severity is required"],
     },
   },
-  { _id: false },
+  {
+    _id: false,
+  },
 );
 
 const preparationPlanSchema = new mongoose.Schema({
@@ -102,6 +110,7 @@ const preparationPlanSchema = new mongoose.Schema({
     },
   ],
 });
+
 const interviewReportSchema = new mongoose.Schema(
   {
     jobDescription: {
@@ -109,7 +118,7 @@ const interviewReportSchema = new mongoose.Schema(
       required: [true, "Job description is required"],
     },
     resume: {
-      tyoe: String,
+      type: String,
     },
     selfDescription: {
       type: String,
@@ -123,9 +132,9 @@ const interviewReportSchema = new mongoose.Schema(
     behavioralQuestions: [behavioralQuestionSchema],
     skillGaps: [skillGapSchema],
     preparationPlan: [preparationPlanSchema],
-    latex: {
-      type: String,
-      required: true,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
     },
   },
   {
@@ -137,4 +146,5 @@ const interviewReportModel = mongoose.model(
   "InterviewReport",
   interviewReportSchema,
 );
+
 module.exports = interviewReportModel;

@@ -91,31 +91,28 @@ const interviewReportSchema = z.object({
     .describe(
       "The title of the job for which the interview report is generated",
     ),
-  latex: z
-    .string()
-    .describe(
-      "Give me the latex code which i compile on ovverleaf and make a resume or what keywords should change So that my resume is shortlist for the  interview and these change based on the job description",
-    ),
 });
 async function generateInterviewReport({
   resume,
   selfDescription,
   jobDescription,
 }) {
-  const promt = `Generate an Interview report for a candidate with following details
+  const promt = ` Return ONLY JSON matching this schema:
+  Generate an Interview report for a candidate with following details
   Resume:${resume}
   Sefl Description: ${selfDescription}
   Job Description: ${jobDescription}`;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: "",
+    model: "gemini-3-flash-preview",
+    contents: promt,
     config: {
-      responseMineType: "application//json", // how ai generate the respone
+      responseMimeType: "application/json", // how ai generate the respone
       responseJsonSchema: zodToJsonSchema(interviewReportSchema), // formate of the response
     },
   });
-
+  console.log("RAW RESPONSE:");
   console.log(response.text);
+  return JSON.parse(response.text);
 }
-module.exports = invokeGeminiAi;
+module.exports = generateInterviewReport;
